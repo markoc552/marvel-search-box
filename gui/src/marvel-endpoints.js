@@ -1,0 +1,10 @@
+const MARVEL_BASE_URL = "https://gateway.marvel.com/v1/public/";
+const AUTHORIZATION_PATH =
+  "?ts=1&apikey=b99d521e99014059d8817cbc3cffaddd&hash=0e18ccbb38aba81d63f305c85880fbd8";
+
+export default {
+  FETCH_CHARACTERS_URL: `${MARVEL_BASE_URL}characters${AUTHORIZATION_PATH}`,
+  FETCH_COMICS_URL: `${MARVEL_BASE_URL}comics${AUTHORIZATION_PATH}`,
+  FETCH_EVENTS_URL: `${MARVEL_BASE_URL}events${AUTHORIZATION_PATH}`,
+  FETCH_STORIES_URL: `${MARVEL_BASE_URL}stories${AUTHORIZATION_PATH}`,
+};
