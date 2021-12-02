@@ -2,19 +2,25 @@ import React from "react";
 import { Icon } from "semantic-ui-react";
 import { toast } from "react-toastify";
 
-const BookmarkStar = ({ bookmarks, character, updateBookmarks }) => {
-  const onBookmarkClick = (character) => {
-    let message;
+const BookmarkStar = ({ character, bookmarks, updateBookmarks }) => {
 
+  const onBookmarkUpdate = (character) => {
     if (!bookmarks.includes(character)) {
       updateBookmarks([...bookmarks, character]);
-      message = "Character bookmarked!";
+
+      return "Character bookmarked!";
     } else {
-      var index = bookmarks.indexOf(character);
+      const index = bookmarks.indexOf(character);
+
       bookmarks.splice(index, 1);
       updateBookmarks([...bookmarks]);
-      message = "Character removed from bookmarks!";
+      
+      return "Character removed from bookmarks!";
     }
+  };
+
+  const onBookmarkClick = (character) => {
+    const message = onBookmarkUpdate(character);
 
     toast.info(message, {
       position: "bottom-center",

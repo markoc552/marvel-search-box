@@ -9,7 +9,8 @@ import { motion } from "framer-motion";
 import history from "../history";
 
 const Welcome = () => {
-  const variants = {
+  
+  const animationVariants = {
     visible: {
       opacity: 1,
       scale: 1,
@@ -22,7 +23,7 @@ const Welcome = () => {
     <motion.div
       initial="hidden"
       animate="visible"
-      variants={variants}
+      variants={animationVariants}
     >
       <WelcomeContainer>
         <WelcomeDialog>

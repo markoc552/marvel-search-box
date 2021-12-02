@@ -12,7 +12,7 @@ import { Image } from "semantic-ui-react";
 import { motion } from "framer-motion";
 import BookmarkStar from "../utils/BookmarkStar";
 
-const variants = {
+const animationVariants = {
   visible: {
     opacity: 1,
     scale: 1,
@@ -26,7 +26,7 @@ const DesktopCardLayout = ({ characters, bookmarks, updateBookmarks }) => {
     <LaptopCardLayoutContainer>
       {characters.map((character) => {
         return (
-          <motion.div initial="hidden" animate="visible" variants={variants}>
+          <motion.div initial="hidden" animate="visible" variants={animationVariants}>
             <CharacterCard>
               <CardImageContainer>
                 <Image

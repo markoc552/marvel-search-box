@@ -2,5 +2,12 @@
   "sidemenu.comics": "Comics",
   "sidemenu.events": "Events",
   "sidemenu.stories": "Stories",
-  "search.placeholder": "Search..."
+  "search.placeholder": "Search...",
+  "bookmarkbar.all": "All",
+  "bookmarkbar.bookmarked": "Bookmarked",
+  "bookmarkbar.reset": "Delete all",
+  "lang.changer.label": "Language",
+  "lang.changer.cro.label": "Croatian",
+  "lang.changer.eng.label": "English",
+  "lang.changer.chooser": "Choose a language"
 }

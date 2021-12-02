@@ -4,6 +4,9 @@ import {
   SBText,
 } from "./StyledComponents";
 import { Label, Button } from "semantic-ui-react";
+import { toast } from "react-toastify";
+import { FormattedMessage } from "react-intl";
+import { useMediaQuery } from "@react-hook/media-query";
 
 const BookmarkBar = ({
   showBookmarks,
@@ -11,6 +14,22 @@ const BookmarkBar = ({
   bookmarks,
   updateBookmarks,
 }) => {
+  const isMobileOnly = useMediaQuery("only screen and (max-width: 365px)");
+
+  const onBookmarkDelete = () => {
+    updateBookmarks([]);
+
+    toast.info("Bookmarks deleted!", {
+      position: "bottom-center",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+  };
+
   return (
     <BookmarkBarContainer>
       <SBText
@@ -18,33 +37,41 @@ const BookmarkBar = ({
         style={{
           color: !showBookmarks && "red",
           borderBottom: !showBookmarks && "2px solid red",
+          fontSize: isMobileOnly && "11px",
         }}
       >
-        All
+        <FormattedMessage id="bookmarkbar.all" />
       </SBText>
       <SBText
         onClick={() => setShowBookmarks(true)}
         style={{
           color: showBookmarks && "red",
           borderBottom: showBookmarks && "2px solid red",
+          fontSize: isMobileOnly && "11px",
         }}
       >
-        Bookmarked
-        <Label style={{ marginLeft: "4px" }} circular color="red">
+        <FormattedMessage id="bookmarkbar.bookmarked" />
+        <Label
+          style={{ marginLeft: "4px" }}
+          size={isMobileOnly ? "tiny" : "medium"}
+          circular
+          color="red"
+        >
           {bookmarks.length}
         </Label>
       </SBText>
       <Button
+        size={isMobileOnly ? "tiny" : "medium"}
         basic
         circular
-        onClick={() => updateBookmarks([])}
+        onClick={() => onBookmarkDelete()}
         color="red"
         style={{
-          marginTop: "auto",
-          marginBottom: "auto",
+          margin: "auto 0",
+          fontSize: isMobileOnly && "10px",
         }}
       >
-        Reset
+        <FormattedMessage id="bookmarkbar.reset" />
       </Button>
     </BookmarkBarContainer>
   );

@@ -13,35 +13,63 @@ import DesktopNavigation from "../components/navigations/DesktopNavigation";
 import CardLayout from "../components/layouts/CardLayout";
 import BookmarkBar from "../components/utils/BookmarkBar";
 
-import { fetchAllCharacters, fetchAllFilters } from "../redux/actions";
+import { fetchAllFilters, fetchCharacters } from "../redux/actions";
 import { connect, useSelector } from "react-redux";
 import { motion } from "framer-motion";
 
-const Home = (props) => {
+const Home = ({ store, fetchAllFilters, fetchCharacters }) => {
   const [showSideMenu, setShowSideMenu] = useState(false);
   const [showBookmarks, setShowBookmarks] = useState(false);
+  const [bookmarks, updateLocalBookmarks] = useState([]);
+
   const [loading, setLoadingCharacters] = useState(false);
-  const [bookmarks, updateBookmarks] = useState([]);
+
   const [activePage, setActivePage] = useState(1);
+  const [availablePages, setAvailablePages] = useState(0);
+  const [filter, setFilter] = useState("");
 
   const mobileOnly = useMediaQuery("only screen and (max-width: 767px)");
 
   useEffect(() => {
-    props.fetchAllCharacters(1);
-    props.fetchAllFilters();
+    const bookmarks = JSON.parse(window.localStorage.getItem("msb.bookmarks"));
+
+    if (bookmarks === null) {
+      window.localStorage.setItem("msb.bookmarks", JSON.stringify([]));
+    } else {
+      updateLocalBookmarks(bookmarks);
+    }
+
+    fetchAllFilters();
   }, []);
 
-  const availablePages = useSelector((state) => state.availablePages);
+  store.subscribe(() => {
+    const filter = store.getState().filter;
+    const availablePages = store.getState().availablePages;
+
+    setFilter(filter);
+    setAvailablePages(availablePages);
+
+    filter !== "" && setShowBookmarks(false);
+    filter === "" && setShowBookmarks(true);
+  });
 
   const filters = useSelector((state) => state.filters);
 
-  const variants = {
+  const bookmarksKey = "msb.bookmarks";
+
+  const animationVariants = {
     visible: {
       opacity: 1,
       scale: 1,
       transition: { duration: 0.35 },
     },
     hidden: { opacity: 0, scale: 1.05 },
+  };
+
+  const updateBookmarks = (bookmarks) => {
+    updateLocalBookmarks(bookmarks);
+
+    window.localStorage.setItem(bookmarksKey, JSON.stringify(bookmarks));
   };
 
   const renderMenu = () =>
@@ -70,10 +98,9 @@ const Home = (props) => {
       <Loader active size="large" style={{ margin: "auto auto" }} />
     ) : (
       <CardLayout
-        showBookmarks={showBookmarks}
+        showBookmarks={showBookmarks || filter === ""}
         bookmarks={bookmarks}
         updateBookmarks={updateBookmarks}
-        store={props.store}
       />
     );
 
@@ -81,12 +108,13 @@ const Home = (props) => {
     !showBookmarks &&
     !loading && (
       <Pagination
+        disabled={availablePages === 0}
         activePage={activePage}
         totalPages={availablePages !== undefined ? availablePages : 0}
         onPageChange={async (e, { activePage }) => {
           setActivePage(activePage);
           setLoadingCharacters(true);
-          await props.fetchAllCharacters(activePage);
+          await fetchCharacters(filter, activePage);
           setLoadingCharacters(false);
         }}
       />
@@ -99,12 +127,16 @@ const Home = (props) => {
         {renderMenu()}
         {renderSideFilters()}
         <CardContainer>
-          <motion.div initial="hidden" animate="visible" variants={variants}>
+          <motion.div
+            initial="hidden"
+            animate="visible"
+            variants={animationVariants}
+          >
             <BookmarkBar
-              updateBookmarks={updateBookmarks}
-              bookmarks={bookmarks}
               showBookmarks={showBookmarks}
               setShowBookmarks={setShowBookmarks}
+              bookmarks={bookmarks}
+              updateBookmarks={updateBookmarks}
             />
           </motion.div>
           {renderCardLayout()}
@@ -112,7 +144,7 @@ const Home = (props) => {
             style={{ margin: "auto auto" }}
             initial="hidden"
             animate="visible"
-            variants={variants}
+            variants={animationVariants}
           >
             {renderPagination()}
           </motion.div>
@@ -122,7 +154,4 @@ const Home = (props) => {
   );
 };
 
-export default connect(null, {
-  fetchAllCharacters,
-  fetchAllFilters,
-})(Home);
+export default connect(null, { fetchAllFilters, fetchCharacters })(Home);

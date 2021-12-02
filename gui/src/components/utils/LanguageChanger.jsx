@@ -1,8 +1,12 @@
 import React from "react";
 import { Button, Dropdown, Flag } from "semantic-ui-react";
 import { useDispatch } from "react-redux";
+import { FormattedMessage } from "react-intl";
+import { useMediaQuery } from "@react-hook/media-query";
 
 const LanguageChanger = () => {
+  const isMobileOnly = useMediaQuery("only screen and (max-width: 465px)");
+
   const dispatch = useDispatch();
 
   const onLangChange = (lang) => {
@@ -11,15 +15,15 @@ const LanguageChanger = () => {
 
   return (
     <Button.Group
+      size={isMobileOnly ? "tiny" : "medium"}
       color="red"
       basic
-      circular
       style={{
         margin: "auto auto",
       }}
     >
       <Dropdown
-        text="Language"
+        text={<FormattedMessage id="lang.changer.label" />}
         icon="globe"
         floating
         labeled
@@ -27,15 +31,18 @@ const LanguageChanger = () => {
         className="icon"
       >
         <Dropdown.Menu>
-          <Dropdown.Header icon="globe" content="Choose language" />
+          <Dropdown.Header
+            icon="globe"
+            content={<FormattedMessage id="lang.changer.chooser" />}
+          />
           <Dropdown.Divider />
           <Dropdown.Item onClick={() => onLangChange("cro")}>
             <Flag name="croatia" />
-            Croatian
+            <FormattedMessage id="lang.changer.cro.label" />
           </Dropdown.Item>
           <Dropdown.Item onClick={() => onLangChange("en")}>
             <Flag name="england" />
-            English
+            <FormattedMessage id="lang.changer.eng.label" />
           </Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown>

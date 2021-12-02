@@ -257,6 +257,7 @@ export const BookmarkBar = styled.div`
   margin: 10px auto;
   border-radius: 50px;
   box-shadow: 0px 3px 7px 0px rgba(0, 0, 0, 0.2);
+
 `;
 
 export const CardContainer = styled.div`
@@ -291,7 +292,7 @@ export const CardContainer = styled.div`
 export const LaptopCardLayoutContainer = styled.div`
   display: flex;
   flex-flow: row wrap;
-  width: 90vw;
+  width: 92vw;
 `;
 
 export const TabletCardLayoutContainer = styled.div`
@@ -364,10 +365,16 @@ export const CardDescriptionContainer = styled.div`
     font-size: 12px;
   }
 
-  @media only screen and (max-width: 400px) {
+  @media only screen and (max-width: 320px) {
     width: 70vw;
     margin: 1vh auto;
-    font-size: 10px;
+    font-size: 8px;
+  }
+
+  @media only screen and (min-width: 320px) and (max-width: 435px) {
+    width: 70vw;
+    margin: 1vh auto;
+    font-size: 9px;
   }
 
   @media only screen and (min-width: 768px) and (max-width: 1024px) {

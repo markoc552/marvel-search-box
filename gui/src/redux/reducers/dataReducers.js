@@ -14,14 +14,21 @@ export default (state = INITIAL_STATE, action) => {
       return {
         ...state,
         characters: action.payload.data,
-        availablePages: floor(action.payload.total / action.payload.count),
+      };
+    case "SET_AVAILABLE_PAGES":
+      return {
+        ...state,
+        availablePages: setAvailablePages(
+          action.payload.total,
+          action.payload.count
+        ),
       };
     case "FETCH_ALL_FILTERS":
       return {
         ...state,
         filters: action.payload,
       };
-    case "FILTER_RESULTS":
+    case "SET_QUERY_FILTER":
       return {
         ...state,
         filter: action.payload,
@@ -34,4 +41,12 @@ export default (state = INITIAL_STATE, action) => {
     default:
       return state;
   }
+};
+
+const setAvailablePages = (total, count) => {
+  if (total === 0 || count === 0) return 0;
+
+  console.log(total, count)
+
+  return floor(total / count);
 };

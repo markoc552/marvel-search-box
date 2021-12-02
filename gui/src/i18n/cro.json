@@ -2,5 +2,12 @@
   "sidemenu.comics": "Stripovi",
   "sidemenu.events": "Događanja",
   "sidemenu.stories": "Priče",
-  "search.placeholder": "Pretraži..."
+  "search.placeholder": "Pretraži...",
+  "bookmarkbar.all": "Svi",
+  "bookmarkbar.bookmarked": "Spremljeni",
+  "bookmarkbar.reset": "Izbriši sve",
+  "lang.changer.label": "Jezik",
+  "lang.changer.cro.label": "Hrvatski",
+  "lang.changer.eng.label": "Engleski",
+  "lang.changer.chooser": "Odaberi jezik"
 }

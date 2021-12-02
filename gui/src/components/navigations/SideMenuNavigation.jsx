@@ -21,8 +21,8 @@ const SideMenuNavigation = () => {
       {filters.length === 0 ? (
         <Loader active style={{ margin: "auto auto" }} size="huge" />
       ) : (
-        filters.map(({ title, content }) => {
-          return <Accordion title={title} content={content} />;
+        filters.map(({ title, content }, id) => {
+          return <Accordion id={id} title={title} content={content} />;
         })
       )}
     </SideMenuContainer>
