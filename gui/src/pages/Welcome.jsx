@@ -4,27 +4,14 @@ import {
   WelcomeDialog,
   WelcomeDialogName,
 } from "../components/utils/StyledComponents";
+import { animationVariants } from "../animations";
 import { Button } from "semantic-ui-react";
 import { motion } from "framer-motion";
 import history from "../history";
 
 const Welcome = () => {
-  
-  const animationVariants = {
-    visible: {
-      opacity: 1,
-      scale: 1,
-      transition: { duration: 0.35 },
-    },
-    hidden: { opacity: 0, scale: 1.05 },
-  };
-
   return (
-    <motion.div
-      initial="hidden"
-      animate="visible"
-      variants={animationVariants}
-    >
+    <motion.div initial="hidden" animate="visible" variants={animationVariants}>
       <WelcomeContainer>
         <WelcomeDialog>
           <WelcomeDialogName>

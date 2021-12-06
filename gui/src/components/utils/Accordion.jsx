@@ -6,6 +6,7 @@ import {
 } from "./StyledComponents";
 import { useMediaQuery } from "@react-hook/media-query";
 import { Icon, Checkbox } from "semantic-ui-react";
+import { animationVariants } from "../../animations";
 import { FormattedMessage } from "react-intl";
 import { motion } from "framer-motion";
 
@@ -22,15 +23,6 @@ const Accordion = (props) => {
       : title === "sidemenu.events"
       ? "eye"
       : "filter";
-  };
-
-  const animationVariants = {
-    visible: {
-      opacity: 1,
-      scale: 1,
-      transition: { duration: 0.35 },
-    },
-    hidden: { opacity: 0, scale: 1.05 },
   };
 
   return (

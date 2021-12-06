@@ -9,24 +9,16 @@ import {
   LaptopCardLayoutContainer,
 } from "../utils/StyledComponents";
 import { Image } from "semantic-ui-react";
+import { animationVariants } from "../../animations";
 import { motion } from "framer-motion";
 import BookmarkStar from "../utils/BookmarkStar";
-
-const animationVariants = {
-  visible: {
-    opacity: 1,
-    scale: 1,
-    transition: { duration: 0.35 },
-  },
-  hidden: { opacity: 0, scale: 1.05 },
-};
 
 const DesktopCardLayout = ({ characters, bookmarks, updateBookmarks }) => {
   return (
     <LaptopCardLayoutContainer>
       {characters.map((character) => {
         return (
-          <motion.div initial="hidden" animate="visible" variants={animationVariants}>
+          <motion.div id={character.id} initial="hidden" animate="visible" variants={animationVariants}>
             <CharacterCard>
               <CardImageContainer>
                 <Image

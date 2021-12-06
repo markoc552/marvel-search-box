@@ -3,21 +3,23 @@ import { Icon } from "semantic-ui-react";
 import { toast } from "react-toastify";
 
 const BookmarkStar = ({ character, bookmarks, updateBookmarks }) => {
-
+  
   const onBookmarkUpdate = (character) => {
-    if (!bookmarks.includes(character)) {
-      updateBookmarks([...bookmarks, character]);
-
-      return "Character bookmarked!";
-    } else {
+    if (isBookmarked(character)) {
       const index = bookmarks.indexOf(character);
 
       bookmarks.splice(index, 1);
       updateBookmarks([...bookmarks]);
-      
+
       return "Character removed from bookmarks!";
+    } else {
+      updateBookmarks([...bookmarks, character]);
+
+      return "Character bookmarked!";
     }
   };
+
+  const isBookmarked = (character) => bookmarks.includes(character);
 
   const onBookmarkClick = (character) => {
     const message = onBookmarkUpdate(character);
@@ -40,7 +42,7 @@ const BookmarkStar = ({ character, bookmarks, updateBookmarks }) => {
       color="yellow"
       size="large"
       corner="bottom right"
-      name={bookmarks.includes(character) ? "star" : "star outline"}
+      name={isBookmarked(character) ? "star" : "star outline"}
     />
   );
 };

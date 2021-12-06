@@ -6,6 +6,7 @@ import {
 } from "../components/utils/StyledComponents";
 import { Pagination, Loader } from "semantic-ui-react";
 import { useMediaQuery } from "@react-hook/media-query";
+import { animationVariants } from "../animations"
 import Accordion from "../components/utils/Accordion";
 import SideMenuNavigation from "../components/navigations/SideMenuNavigation";
 import MobileNavigation from "../components/navigations/MobileNavigation";
@@ -16,6 +17,7 @@ import BookmarkBar from "../components/utils/BookmarkBar";
 import { fetchAllFilters, fetchCharacters } from "../redux/actions";
 import { connect, useSelector } from "react-redux";
 import { motion } from "framer-motion";
+
 
 const Home = ({ store, fetchAllFilters, fetchCharacters }) => {
   const [showSideMenu, setShowSideMenu] = useState(false);
@@ -30,19 +32,9 @@ const Home = ({ store, fetchAllFilters, fetchCharacters }) => {
 
   const mobileOnly = useMediaQuery("only screen and (max-width: 767px)");
 
-  useEffect(() => {
-    const bookmarks = JSON.parse(window.localStorage.getItem("msb.bookmarks"));
+  const bookmarksKey = "msb.bookmarks";
 
-    if (bookmarks === null) {
-      window.localStorage.setItem("msb.bookmarks", JSON.stringify([]));
-    } else {
-      updateLocalBookmarks(bookmarks);
-    }
-
-    fetchAllFilters();
-  }, []);
-
-  store.subscribe(() => {
+  const unsubscribe = store.subscribe(() => {
     const filter = store.getState().filter;
     const availablePages = store.getState().availablePages;
 
@@ -53,18 +45,21 @@ const Home = ({ store, fetchAllFilters, fetchCharacters }) => {
     filter === "" && setShowBookmarks(true);
   });
 
+  useEffect(() => {
+    const bookmarks = JSON.parse(window.localStorage.getItem(bookmarksKey));
+
+    if (bookmarks === null) {
+      window.localStorage.setItem(bookmarksKey, JSON.stringify([]));
+    } else {
+      updateLocalBookmarks(bookmarks);
+    }
+
+    fetchAllFilters();
+
+    return unsubscribe()
+  }, []);
+
   const filters = useSelector((state) => state.filters);
-
-  const bookmarksKey = "msb.bookmarks";
-
-  const animationVariants = {
-    visible: {
-      opacity: 1,
-      scale: 1,
-      transition: { duration: 0.35 },
-    },
-    hidden: { opacity: 0, scale: 1.05 },
-  };
 
   const updateBookmarks = (bookmarks) => {
     updateLocalBookmarks(bookmarks);
