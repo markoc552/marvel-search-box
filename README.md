@@ -1,5 +1,20 @@
 ## Marvel Searchbox
 
+### Simple application to search marvel characters from Marvel API
+
+![Marvel-search-box](/assets/cover-image.png)
+
+**Features**
+ * Searches characters by name
+ * Iterates through pages of returned results
+ * Bookmarks specific character and stores it in the browser
+
+**Technologies**
+ * React
+ * Redux
+ * CRA
+
+
 ## Guide to installation
 
  * **1.** Clone the repository
